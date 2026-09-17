@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Lucielle
 {
@@ -10,14 +13,30 @@ namespace Lucielle
         private const int MIN_CARD_COUNT = 12;
 
         [Header("Modules")]
+        [SerializeField] private GameObject gameParent;
         [SerializeField] private Transform cardContainer;
         [SerializeField] private MemoryCard cardPrefab;
 
         [Space(5f), Header("Channels")]
         [SerializeField] private IntEventChannelSO cardClickEventChannelSO;
+        [SerializeField] private VoidEventChannelSO memoryGameStartEventChannelSO;
 
         private List<MemoryCard> pooledCards = new();
         private bool isStarted = false;
+        private int previousIndex = -1;
+
+        private void Awake()
+        {
+            Initialize();
+            cardClickEventChannelSO?.RegisterListener(OnCardInteract);
+            memoryGameStartEventChannelSO?.RegisterListener(() => StartMemoryGame());
+        }
+
+        private void OnDestroy()
+        {
+            cardClickEventChannelSO?.RemoveListener(OnCardInteract);
+            memoryGameStartEventChannelSO?.RemoveListener(() => StartMemoryGame());
+        }
 
         public void Initialize()
         {
@@ -29,6 +48,8 @@ namespace Lucielle
                 card.gameObject.SetActive(false);
                 pooledCards.Add(card);
             }
+
+            previousIndex = -1;
         }
 
         [Button]
@@ -62,6 +83,9 @@ namespace Lucielle
                 pooledCards[i].Initialize(dummyIndexes[i]);
                 pooledCards[i].gameObject.SetActive(true);
             }
+
+            gameParent.SetActive(true);
+            previousIndex = -1;
             return;
 
             void ShuffleList(List<int> list)
@@ -72,6 +96,68 @@ namespace Lucielle
                     (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
                 }
             }
+        }
+
+        private void OnCardInteract(int index)
+        {
+            if (previousIndex < 0)
+            {
+                previousIndex = index;
+                return;
+            }
+
+            if (previousIndex == index)
+            {
+                //add delay for animation here
+                var relatedCard = GetCard(index);
+                relatedCard.Item1.Complete();
+                relatedCard.Item2.Complete();
+
+                //check the game is finished or not
+                if (!CheckGameState()) return;
+
+                gameParent.SetActive(false);
+                ResetGame();
+            }
+            else
+            {
+                //add delay for animation here
+                ResetCard();
+            }
+        }
+
+        private (MemoryCard, MemoryCard) GetCard(int index)
+        {
+            (MemoryCard, MemoryCard) result = (null, null);
+            foreach (MemoryCard card in pooledCards)
+            {
+                if (card.CurrentIndex != index) continue;
+
+                if (result.Item1 == null)
+                {
+                    result.Item1 = card;
+                    continue;
+                }
+                result.Item2 = card;
+                break;
+            }
+
+            return result;
+        }
+
+        private void ResetCard()
+        {
+            foreach (MemoryCard card in pooledCards)
+            {
+                if (card.IsFlipped)
+                    card.Unflip();
+            }
+        }
+
+        //return true if the game is finished
+        private bool CheckGameState()
+        {
+            return pooledCards.All(card => card.IsComplete);
         }
 
         public void ResetGame()
