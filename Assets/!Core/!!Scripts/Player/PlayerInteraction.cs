@@ -20,6 +20,7 @@ namespace Lucielle
         private void OnTriggerEnter(Collider other)
         {
             if (interactable != null) return;
+            if (!other.gameObject.tag.Equals("Interactable")) return;
 
             IInteractable obj = other.GetComponent<IInteractable>();
             if (obj != null)
@@ -28,13 +29,13 @@ namespace Lucielle
 
         private void OnTriggerExit(Collider other)
         {
+            if (!other.gameObject.tag.Equals("Interactable")) return;
             interactable = null;
         }
 
-        public void CallInteract()
+        private void CallInteract()
         {
-            if (interactable == null) return;
-            interactable.Interact();
+            interactable?.Interact();
         }
     }
 }
