@@ -17,6 +17,10 @@ namespace Lucielle
         [SerializeField] private Transform cardContainer;
         [SerializeField] private MemoryCard cardPrefab;
 
+        [Header("Properties")]
+        [SerializeField] private Sprite cardSleeve;
+        [SerializeField] private List<Sprite> cardSprites;
+
         [Space(5f), Header("Channels")]
         [SerializeField] private IntEventChannelSO cardClickEventChannelSO;
         [SerializeField] private VoidEventChannelSO memoryGameStartEventChannelSO;
