@@ -5054,6 +5054,7 @@ MonoBehaviour:
   camTransform: {fileID: 0}
   moveSpeed: 5
   turnSmoothTime: 0.1
+  isActive: 1
   controlActivationEventChannelSO: {fileID: 0}
 --- !u!143 &312326949
 CharacterController:

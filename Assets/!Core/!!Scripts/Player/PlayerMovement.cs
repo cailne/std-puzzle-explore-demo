@@ -39,25 +39,5 @@ namespace Lucielle
                 controller.Move(moveDir.normalized * (moveSpeed * Time.deltaTime));
             }
         }
-
-        public void MoveUpWard()
-        {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        }
-
-        public void MoveDownWard()
-        {
-            transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-        }
-
-        public void MoveLeftSide()
-        {
-            transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
-        }
-
-        public void MoveRightSide()
-        {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-        }
     }
 }
