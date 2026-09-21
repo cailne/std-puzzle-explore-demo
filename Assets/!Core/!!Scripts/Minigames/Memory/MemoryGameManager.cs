@@ -16,10 +16,7 @@ namespace Lucielle
         [SerializeField] private GameObject gameParent;
         [SerializeField] private Transform cardContainer;
         [SerializeField] private MemoryCard cardPrefab;
-
-        [Header("Properties")]
-        [SerializeField] private Sprite cardSleeve;
-        [SerializeField] private List<Sprite> cardSprites;
+        [SerializeField] private GenericDatabaseSO cardDatabase;
 
         [Space(5f), Header("Channels")]
         [SerializeField] private IntEventChannelSO cardClickEventChannelSO;
@@ -54,6 +51,7 @@ namespace Lucielle
             }
 
             previousIndex = -1;
+            gameParent.SetActive(false);
         }
 
         [Button]
@@ -84,7 +82,8 @@ namespace Lucielle
                     pooledCards.Add(card);
                 }
 
-                pooledCards[i].Initialize(dummyIndexes[i]);
+                int cardIndex = dummyIndexes[i];
+                pooledCards[i].Initialize(cardIndex, cardDatabase.GetObjectAsset<SpriteSO>(cardIndex));
                 pooledCards[i].gameObject.SetActive(true);
             }
 
@@ -112,11 +111,11 @@ namespace Lucielle
 
             if (previousIndex == index)
             {
-                //add delay for animation here
                 var relatedCard = GetCard(index);
                 relatedCard.Item1.Complete();
                 relatedCard.Item2.Complete();
 
+                previousIndex = -1;
                 //check the game is finished or not
                 if (!CheckGameState()) return;
 
@@ -125,8 +124,8 @@ namespace Lucielle
             }
             else
             {
-                //add delay for animation here
                 ResetCard();
+                previousIndex = -1;
             }
         }
 

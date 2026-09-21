@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faad1de6dbbf04147a29b2a7efef5284, type: 3}
-  m_Name: PlayerMoveUpWard_InputActionSO
+  m_Script: {fileID: 11500000, guid: ad7ee9dd06c9eb744986bf8c9005a48a, type: 3}
+  m_Name: Card4
   m_EditorClassIdentifier: 
   developmentDesc: 
-  actionName: Player Move UpWard
-  useKeyCode: 1
-  inputType: 0
-  keyCode: 119
-  keyName: 
+  cardFrontSprite: {fileID: -1222404221343023462, guid: 661156f394d6046c185490657f9bdfed, type: 3}
+  cardBackSprite: {fileID: -3454900314430299752, guid: fd90010ba2b8746359c2f503c5cf6c3a, type: 3}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59449bcebfffbd443844839db914e544, type: 3}
+  m_Name: MemoryCardSpriteDatabaseSO
+  m_EditorClassIdentifier: 
+  objectAssetList:
+  - {fileID: 11400000, guid: 602d15c18b84da94ba1f564a173f3cae, type: 2}
+  - {fileID: 11400000, guid: 68bcdd7c478e7ff478b93752066e2de8, type: 2}
+  - {fileID: 11400000, guid: 7ac8badd76660af44b8617bedb02f3eb, type: 2}
+  - {fileID: 11400000, guid: 79a2346e4efbfd84fa98976b06041aaa, type: 2}
+  - {fileID: 11400000, guid: 71e567b60fcc51e4e932790de80f9925, type: 2}
+  - {fileID: 11400000, guid: 9251b262af05ff84dab7f314921c4eae, type: 2}
+  objectsPath: Assets/!Core/ScriptableObjects/Database/Sprite
+  objectTypeSO: {fileID: 11400000, guid: 602d15c18b84da94ba1f564a173f3cae, type: 2}

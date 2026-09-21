@@ -192,7 +192,7 @@ namespace Lucielle
 		public static string fileName = "Screenshot ";
 		public static int startNumber = 1;
 
-		[MenuItem("GCS/Take Screenshot of Game View #_4")]
+		[MenuItem("Lucielle/Take Screenshot of Game View #_4")]
 		private static void TakeScreenshot()
 		{
 			int number = startNumber;

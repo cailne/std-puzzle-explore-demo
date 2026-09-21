@@ -13,7 +13,7 @@ namespace Lucielle
         [BoxGroup("Debug"), ShowNonSerializedField, ReadOnly]
         private bool isActive = false;
 
-        [BoxGroup("Debug"), ShowNonSerializedField, ReadOnly]
+        [BoxGroup("Debug"), SerializeField, ReadOnly]
         private List<InputActionHandler> inputActionHandlers = new();
 
         public bool IsActive => isActive;

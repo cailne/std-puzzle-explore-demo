@@ -7,10 +7,8 @@ namespace Lucielle
 {
     public class InputManager : Singleton<InputManager>
     {
-        [ShowNonSerializedField]
         public LinkedList<InputLayerHandler> inputLayersStack = new();
 
-        [ShowNonSerializedField]
         public Dictionary<InputActionSO, LinkedList<InputActionHandler>> inputActionStack = new();
 
         public InputLayerHandler currentInputLayer => inputLayersStack.Count > 0 ? inputLayersStack.Last.Value : null;
@@ -141,5 +139,13 @@ namespace Lucielle
             if (!inputActionStack.ContainsKey(inputAction)) return false;
             return inputActionStack[inputAction].Count != 0 && inputActionStack[inputAction].Last.Value == inputActionHandler;
         }
+
+#if UNITY_EDITOR
+        [Button]
+        public void CheckFrontLayer()
+        {
+            DebugManager.Log($"Current Layer Input Object: {currentInputLayer.gameObject.name}");
+        }
+#endif
     }
 }
