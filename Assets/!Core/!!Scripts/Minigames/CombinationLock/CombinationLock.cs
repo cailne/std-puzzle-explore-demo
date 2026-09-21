@@ -152,7 +152,7 @@ namespace Lucielle
 		private List<COMBINATION_STATUS> EvaluateGuess(List<int> guess, List<int> target)
 		{
 			int length = Mathf.Min(guess.Count, target.Count);
-			List<COMBINATION_STATUS> results = new(length);
+			List<COMBINATION_STATUS> results = new List<COMBINATION_STATUS>(new COMBINATION_STATUS[length]);
 
 			bool[] targetMatched = new bool[length];
 			bool[] guessMatched = new bool[length];
@@ -172,7 +172,7 @@ namespace Lucielle
 				bool foundYellow = false;
 				for (int j = 0; j < length; j++)
 				{
-					if (!targetMatched[j] && guess[i] != target[j]) continue;
+					if (targetMatched[j] || guess[i] != target[j]) continue;
 					results[i] = COMBINATION_STATUS.CLOSE;
 					targetMatched[j] = true;
 					foundYellow = true;
