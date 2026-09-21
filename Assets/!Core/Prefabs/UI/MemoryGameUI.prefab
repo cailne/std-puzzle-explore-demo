@@ -55,6 +55,7 @@ MonoBehaviour:
   cardDatabase: {fileID: 11400000, guid: f34c77380a401a942889047254379962, type: 2}
   cardClickEventChannelSO: {fileID: 11400000, guid: 0552b1372dd36470c87b3a20a1b77e6e, type: 2}
   memoryGameStartEventChannelSO: {fileID: 11400000, guid: 7c0267f4b0a424874b18b6161d4328dc, type: 2}
+  controlActivationEventChannelSO: {fileID: 11400000, guid: 26a7ef5328a767e4f84d229e52a3b343, type: 2}
 --- !u!1 &3089901576850964616
 GameObject:
   m_ObjectHideFlags: 0

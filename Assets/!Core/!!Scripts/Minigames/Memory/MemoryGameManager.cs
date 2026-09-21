@@ -21,6 +21,7 @@ namespace Lucielle
         [Space(5f), Header("Channels")]
         [SerializeField] private IntEventChannelSO cardClickEventChannelSO;
         [SerializeField] private VoidEventChannelSO memoryGameStartEventChannelSO;
+		[SerializeField] private BoolEventChannelSO controlActivationEventChannelSO;
 
         private List<MemoryCard> pooledCards = new();
         private bool isStarted = false;
@@ -87,6 +88,7 @@ namespace Lucielle
                 pooledCards[i].gameObject.SetActive(true);
             }
 
+            controlActivationEventChannelSO?.RaiseEvent(false);
             gameParent.SetActive(true);
             previousIndex = -1;
             return;
@@ -119,6 +121,7 @@ namespace Lucielle
                 //check the game is finished or not
                 if (!CheckGameState()) return;
 
+                controlActivationEventChannelSO?.RaiseEvent(true);
                 gameParent.SetActive(false);
                 ResetGame();
             }

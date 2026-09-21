@@ -24,6 +24,12 @@ namespace Lucielle
         private float airVelocity;
         private float groundedTimer = 0.2f;
 
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
         private void OnEnable()
         {
             controlActivationEventChannelSO?.RegisterListener(SetActiveMovement);
@@ -74,8 +80,16 @@ namespace Lucielle
         private void SetActiveMovement(bool active)
         {
             isActive = active;
-
-            //set cursor lock
+            if (!active)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
     }
 }

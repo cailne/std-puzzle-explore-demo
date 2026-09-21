@@ -58,7 +58,7 @@ namespace Lucielle
 
         protected virtual void OnDestroy()
         {
-            if (instance == this) instance = null;
+            instance = null;
         }
     }
 }

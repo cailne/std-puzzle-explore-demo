@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Lucielle
@@ -10,14 +11,15 @@ namespace Lucielle
         [Header("Modules")]
         [SerializeField] private int defaultDigit = 4;
         [SerializeField] private float numberSpacing = 278f;
+        [SerializeField] private float baseYContainerPosition = -35f;
         [SerializeField] private RectTransform numberContainer;
 
         [Space(5f), Header("Channels")]
         [SerializeField] private BoolEventChannelSO onLockInteractableEventChannelSO;
         [SerializeField] private IntEventChannelSO onLockNumberChangedEventChannelSO;
+		[SerializeField] private BoolEventChannelSO lockAnimationDoneEventChannelSO;
 
         private int currentNumber = 0;
-        private float baseYContainerPosition = 0;
 
         public int CurrentNumber => currentNumber;
 
@@ -36,7 +38,7 @@ namespace Lucielle
             onLockInteractableEventChannelSO?.RemoveListener(TurnLock);
         }
 
-        public void Initialize(int number = 5)
+        public void Initialize(int number = 4)
         {
             currentNumber = number;
             SetColumnDigit();
@@ -46,13 +48,20 @@ namespace Lucielle
         {
             if (numberContainer == null) return;
 
-            if (isUp && currentNumber == 0) return;
-            if (!isUp && currentNumber == 9) return;
+            switch (isUp)
+            {
+                case true when currentNumber == 0:
+                case false when currentNumber == 9:
+                    return;
+                case true:
+                    currentNumber--;
+                    break;
+                default:
+                    currentNumber++;
+                    break;
+            }
 
-            if (isUp) currentNumber--;
-            else currentNumber++;
-
-            SetColumnDigit();
+            SetColumnDigitWithAnimation();
         }
 
         private float GetYForDigit(int digit)
@@ -66,6 +75,21 @@ namespace Lucielle
             Vector2 anchoredPos = numberContainer.anchoredPosition;
             anchoredPos.y = GetYForDigit(currentNumber);
             numberContainer.anchoredPosition = anchoredPos;
+            onLockNumberChangedEventChannelSO?.RaiseEvent(currentNumber);
+        }
+
+        private void SetColumnDigitWithAnimation()
+        {
+            lockAnimationDoneEventChannelSO?.RaiseEvent(false);
+
+            Vector2 anchoredPos = numberContainer.anchoredPosition;
+            anchoredPos.y = GetYForDigit(currentNumber);
+
+            numberContainer.DOAnchorPos(anchoredPos, 0.25f).SetEase(Ease.InCubic).OnComplete(() =>
+            {
+                onLockNumberChangedEventChannelSO?.RaiseEvent(currentNumber);
+                lockAnimationDoneEventChannelSO?.RaiseEvent(true);
+            });
         }
     }
 }

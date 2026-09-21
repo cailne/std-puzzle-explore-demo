@@ -10,12 +10,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5846218234433289166, guid: d0bc9fc75a122f246b9987e72fa61c51, type: 3}
       propertyPath: m_Name
-      value: Interactable Variant
+      value: Interactable_SlidingPuzzleStart
       objectReference: {fileID: 0}
     - target: {fileID: 5999866333862230258, guid: d0bc9fc75a122f246b9987e72fa61c51, type: 3}
       propertyPath: voidEventChannel
       value: 
       objectReference: {fileID: 11400000, guid: 5a98d63382ec24f85afcd27a90a61e9a, type: 2}
+    - target: {fileID: 6250642495286076277, guid: d0bc9fc75a122f246b9987e72fa61c51, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dc9a96783d755c428595e896473b9c5, type: 2}
     - target: {fileID: 7076931309377685159, guid: d0bc9fc75a122f246b9987e72fa61c51, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.99469423

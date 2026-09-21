@@ -13,24 +13,31 @@ namespace Lucielle
 		[Space(5f), Header("Channels")]
 		[SerializeField] private BoolEventChannelSO onLockInteractableEventChannelSO;
 		[SerializeField] private IntEventChannelSO onLockNumberChangedEventChannelSO;
+		[SerializeField] private BoolEventChannelSO lockAnimationDoneEventChannelSO;
+
+		private bool isPlayAllowed = false;
 
 		private void OnEnable()
 		{
 			onLockNumberChangedEventChannelSO?.RegisterListener(OnLockNumberChanged);
+			lockAnimationDoneEventChannelSO?.RegisterListener(SetPlayState);
 		}
 
 		private void OnDisable()
 		{
 			onLockNumberChangedEventChannelSO?.RemoveListener(OnLockNumberChanged);
+			lockAnimationDoneEventChannelSO?.RemoveListener(SetPlayState);
 		}
 
 		public void ClickUp()
 		{
+			if (!isPlayAllowed) return;
 			onLockInteractableEventChannelSO?.RaiseEvent(true);
 		}
 
 		public void ClickDown()
 		{
+			if (!isPlayAllowed) return;
 			onLockInteractableEventChannelSO?.RaiseEvent(false);
 		}
 
@@ -52,6 +59,11 @@ namespace Lucielle
 					downButton.SetActive(true);
 					break;
 			}
+		}
+
+		private void SetPlayState(bool allowed)
+		{
+			isPlayAllowed = allowed;
 		}
 	}
 }
